@@ -3,7 +3,7 @@ Fabric is graciously supported by…
 
 [![Github Repo Tagline](https://github.com/user-attachments/assets/96ab3d81-9b13-4df4-ba09-75dee7a5c3d2)](https://warp.dev/fabric)
 
-<img src="./images/fabric-logo-gif.gif" alt="fabriclogo" width="400" height="400"/>
+<img src="./docs/images/fabric-logo-gif.gif" alt="fabriclogo" width="400" height="400"/>
 
 # `fabric`
 
@@ -15,9 +15,7 @@ Fabric is graciously supported by…
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/danielmiessler/fabric)
 
 <div align="center">
-<p class="align center">
 <h4><code>fabric</code> is an open-source framework for augmenting humans using AI.</h4>
-</p>
 </div>
 
 [Updates](#updates) •
@@ -31,7 +29,7 @@ Fabric is graciously supported by…
 [Helper Apps](#helper-apps) •
 [Meta](#meta)
 
-![Screenshot of fabric](images/fabric-summarize.png)
+![Screenshot of fabric](./docs/images/fabric-summarize.png)
 
 </div>
 
@@ -41,9 +39,9 @@ Since the start of modern AI in late 2022 we've seen an **_extraordinary_** numb
 
 It's all really exciting and powerful, but _it's not easy to integrate this functionality into our lives._
 
-<p class="align center">
+<div class="align center">
 <h4>In other words, AI doesn't have a capabilities problem—it has an <em>integration</em> problem.</h4>
-</p>
+</div>
 
 **Fabric was created to address this by creating and organizing the fundamental units of AI—the prompts themselves!**
 
@@ -95,6 +93,9 @@ Keep in mind that many of these were recorded when Fabric was Python-based, so r
   - [Just use the Patterns](#just-use-the-patterns)
     - [Prompt Strategies](#prompt-strategies)
   - [Custom Patterns](#custom-patterns)
+    - [Setting Up Custom Patterns](#setting-up-custom-patterns)
+    - [Using Custom Patterns](#using-custom-patterns)
+    - [How It Works](#how-it-works)
   - [Helper Apps](#helper-apps)
     - [`to_pdf`](#to_pdf)
     - [`to_pdf` Installation](#to_pdf-installation)
@@ -112,22 +113,9 @@ Keep in mind that many of these were recorded when Fabric was Python-based, so r
 
 ## Updates
 
-> [!NOTE]
->
->June 17, 2025
->
->- Fabric now supports Perplexity AI. Configure it by using `fabric -S` to add your Perplexity AI API Key,
->   and then try:
->
->   ```bash
->   fabric -m sonar-pro "What is the latest world news?"
->   ```
->
->June 11, 2025
->
->- Fabric's YouTube transcription now needs `yt-dlp` to be installed. Make sure to install the latest
-> version (2025.06.09 as of this note). The YouTube API key is only needed for comments (the `--comments` flag)
-> and metadata extraction (the `--metadata` flag).
+Fabric is evolving rapidly.
+
+Stay current with the latest features by reviewing the [CHANGELOG](./CHANGELOG.md) for all recent changes.
 
 ## Philosophy
 
@@ -209,7 +197,7 @@ To install Fabric, [make sure Go is installed](https://go.dev/doc/install), and 
 
 ```bash
 # Install Fabric directly from the repo
-go install github.com/danielmiessler/fabric@latest
+go install github.com/danielmiessler/fabric/cmd/fabric@latest
 ```
 
 ### Environment Variables
@@ -419,7 +407,7 @@ pipx uninstall fabric
 # Clear any old Fabric aliases
 (check your .bashrc, .zshrc, etc.)
 # Install the Go version
-go install github.com/danielmiessler/fabric@latest
+go install github.com/danielmiessler/fabric/cmd/fabric@latest
 # Run setup for the new version. Important because things have changed
 fabric --setup
 ```
@@ -431,7 +419,7 @@ Then [set your environmental variables](#environment-variables) as shown above.
 The great thing about Go is that it's super easy to upgrade. Just run the same command you used to install it in the first place and you'll always get the latest version.
 
 ```bash
-go install github.com/danielmiessler/fabric@latest
+go install github.com/danielmiessler/fabric/cmd/fabric@latest
 ```
 
 ### Shell Completions
@@ -485,7 +473,6 @@ fabric -h
 ```
 
 ```plaintext
-
 Usage:
   fabric [OPTIONS]
 
@@ -500,7 +487,9 @@ Application Options:
   -T, --topp=                       Set top P (default: 0.9)
   -s, --stream                      Stream
   -P, --presencepenalty=            Set presence penalty (default: 0.0)
-  -r, --raw                         Use the defaults of the model without sending chat options (like temperature etc.) and use the user role instead of the system role for patterns.
+  -r, --raw                         Use the defaults of the model without sending chat options (like
+                                    temperature etc.) and use the user role instead of the system role for
+                                    patterns.
   -F, --frequencypenalty=           Set frequency penalty (default: 0.0)
   -l, --listpatterns                List all patterns
   -L, --listmodels                  List all available models
@@ -514,9 +503,12 @@ Application Options:
       --output-session              Output the entire session (also a temporary one) to the output file
   -n, --latest=                     Number of latest patterns to list (default: 0)
   -d, --changeDefaultModel          Change default model
-  -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it and send to chat or print it put to the console and store it in the output file
+  -y, --youtube=                    YouTube video or play list "URL" to grab transcript, comments from it
+                                    and send to chat or print it put to the console and store it in the
+                                    output file
       --playlist                    Prefer playlist over video if both ids are present in the URL
-      --transcript                  Grab transcript from YouTube video and send to chat (it is used per default).
+      --transcript                  Grab transcript from YouTube video and send to chat (it is used per
+                                    default).
       --transcript-with-timestamps  Grab transcript from YouTube video with timestamps and send to chat
       --comments                    Grab comments from YouTube video and send to chat
       --metadata                    Output video metadata
@@ -544,10 +536,24 @@ Application Options:
       --liststrategies              List all strategies
       --listvendors                 List all vendors
       --shell-complete-list         Output raw list without headers/formatting (for shell completion)
+      --search                      Enable web search tool for supported models (Anthropic, OpenAI)
+      --search-location=            Set location for web search results (e.g., 'America/Los_Angeles')
+      --image-file=                 Save generated image to specified file path (e.g., 'output.png')
+      --image-size=                 Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)
+      --image-quality=              Image quality: low, medium, high, auto (default: auto)
+      --image-compression=          Compression level 0-100 for JPEG/WebP formats (default: not set)
+      --image-background=           Background type: opaque, transparent (default: opaque, only for
+                                    PNG/WebP)
+      --suppress-think              Suppress text enclosed in thinking tags
+      --think-start-tag=            Start tag for thinking sections (default: <think>)
+      --think-end-tag=              End tag for thinking sections (default: </think>)
+      --disable-responses-api       Disable OpenAI Responses API (default: false)
+      --voice=                      TTS voice name for supported models (e.g., Kore, Charon, Puck)
+                                    (default: Kore)
+      --list-gemini-voices          List all available Gemini TTS voices
 
 Help Options:
   -h, --help                        Show this help message
-
 ```
 
 ## Our approach to prompting
@@ -607,7 +613,7 @@ Now let's look at some things you can do with Fabric.
 <br />
 <br />
 
-If you're not looking to do anything fancy, and you just want a lot of great prompts, you can navigate to the [`/patterns`](https://github.com/danielmiessler/fabric/tree/main/patterns) directory and start exploring!
+If you're not looking to do anything fancy, and you just want a lot of great prompts, you can navigate to the [`/patterns`](https://github.com/danielmiessler/fabric/tree/main/data/patterns) directory and start exploring!
 
 We hope that if you used nothing else from Fabric, the Patterns by themselves will make the project useful.
 
@@ -623,7 +629,7 @@ be used in addition to the basic patterns.
 See the [Thinking Faster by Writing Less](https://arxiv.org/pdf/2502.18600) paper and
 the [Thought Generation section of Learn Prompting](https://learnprompting.org/docs/advanced/thought_generation/introduction) for examples of prompt strategies.
 
-Each strategy is available as a small `json` file in the [`/strategies`](https://github.com/danielmiessler/fabric/tree/main/strategies) directory.
+Each strategy is available as a small `json` file in the [`/strategies`](https://github.com/danielmiessler/fabric/tree/main/data/strategies) directory.
 
 The prompt modification of the strategy is applied to the system prompt and passed on to the
 LLM in the chat session.
@@ -634,11 +640,48 @@ Use `fabric -S` and select the option to install the strategies in your `~/.conf
 
 You may want to use Fabric to create your own custom Patterns—but not share them with others. No problem!
 
-Just make a directory in `~/.config/custompatterns/` (or wherever) and put your `.md` files in there.
+Fabric now supports a dedicated custom patterns directory that keeps your personal patterns separate from the built-in ones. This means your custom patterns won't be overwritten when you update Fabric's built-in patterns.
 
-When you're ready to use them, copy them into `~/.config/fabric/patterns/`
+### Setting Up Custom Patterns
 
-You can then use them like any other Patterns, but they won't be public unless you explicitly submit them as Pull Requests to the Fabric project. So don't worry—they're private to you.
+1. Run the Fabric setup:
+
+   ```bash
+   fabric --setup
+   ```
+
+2. Select the "Custom Patterns" option from the Tools menu and enter your desired directory path (e.g., `~/my-custom-patterns`)
+
+3. Fabric will automatically create the directory if it does not exist.
+
+### Using Custom Patterns
+
+1. Create your custom pattern directory structure:
+
+   ```bash
+   mkdir -p ~/my-custom-patterns/my-analyzer
+   ```
+
+2. Create your pattern file
+
+   ```bash
+   echo "You are an expert analyzer of ..." > ~/my-custom-patterns/my-analyzer/system.md
+   ```
+
+3. **Use your custom pattern:**
+
+   ```bash
+   fabric --pattern my-analyzer "analyze this text"
+   ```
+
+### How It Works
+
+- **Priority System**: Custom patterns take precedence over built-in patterns with the same name
+- **Seamless Integration**: Custom patterns appear in `fabric --listpatterns` alongside built-in ones
+- **Update Safe**: Your custom patterns are never affected by `fabric --updatepatterns`
+- **Private by Default**: Custom patterns remain private unless you explicitly share them
+
+Your custom patterns are completely private and won't be affected by Fabric updates!
 
 ## Helper Apps
 
@@ -667,7 +710,7 @@ This will create a PDF file named `output.pdf` in the current directory.
 To install `to_pdf`, install it the same way as you install Fabric, just with a different repo name.
 
 ```bash
-go install github.com/danielmiessler/fabric/plugins/tools/to_pdf@latest
+go install github.com/danielmiessler/fabric/cmd/to_pdf@latest
 ```
 
 Make sure you have a LaTeX distribution (like TeX Live or MiKTeX) installed on your system, as `to_pdf` requires `pdflatex` to be available in your system's PATH.
@@ -678,12 +721,12 @@ Make sure you have a LaTeX distribution (like TeX Live or MiKTeX) installed on y
 It generates a `json` representation of a directory of code that can be fed into an AI model
 with instructions to create a new feature or edit the code in a specified way.
 
-See [the Create Coding Feature Pattern README](./patterns/create_coding_feature/README.md) for details.
+See [the Create Coding Feature Pattern README](./data/patterns/create_coding_feature/README.md) for details.
 
 Install it first using:
 
 ```bash
-go install github.com/danielmiessler/fabric/plugins/tools/code_helper@latest
+go install github.com/danielmiessler/fabric/cmd/code_helper@latest
 ```
 
 ## pbpaste

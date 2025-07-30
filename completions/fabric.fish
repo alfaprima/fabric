@@ -31,6 +31,10 @@ function __fabric_get_extensions
 	fabric --listextensions --shell-complete-list 2>/dev/null
 end
 
+function __fabric_get_gemini_voices
+	fabric --list-gemini-voices --shell-complete-list 2>/dev/null
+end
+
 # Main completion function
 complete -c fabric -f
 
@@ -60,9 +64,18 @@ complete -c fabric -l printsession -d "Print session" -a "(__fabric_get_sessions
 complete -c fabric -l address -d "The address to bind the REST API (default: :8080)"
 complete -c fabric -l api-key -d "API key used to secure server routes"
 complete -c fabric -l config -d "Path to YAML config file" -r -a "*.yaml *.yml"
+complete -c fabric -l search-location -d "Set location for web search results (e.g., 'America/Los_Angeles')"
+complete -c fabric -l image-file -d "Save generated image to specified file path (e.g., 'output.png')" -r -a "*.png *.webp *.jpeg *.jpg"
+complete -c fabric -l image-size -d "Image dimensions: 1024x1024, 1536x1024, 1024x1536, auto (default: auto)" -a "1024x1024 1536x1024 1024x1536 auto"
+complete -c fabric -l image-quality -d "Image quality: low, medium, high, auto (default: auto)" -a "low medium high auto"
+complete -c fabric -l image-compression -d "Compression level 0-100 for JPEG/WebP formats (default: not set)" -r
+complete -c fabric -l image-background -d "Background type: opaque, transparent (default: opaque, only for PNG/WebP)" -a "opaque transparent"
 complete -c fabric -l addextension -d "Register a new extension from config file path" -r -a "*.yaml *.yml"
 complete -c fabric -l rmextension -d "Remove a registered extension by name" -a "(__fabric_get_extensions)"
 complete -c fabric -l strategy -d "Choose a strategy from the available strategies" -a "(__fabric_get_strategies)"
+complete -c fabric -l think-start-tag -d "Start tag for thinking sections (default: <think>)"
+complete -c fabric -l think-end-tag -d "End tag for thinking sections (default: </think>)"
+complete -c fabric -l voice -d "TTS voice name for supported models (e.g., Kore, Charon, Puck)" -a "(__fabric_get_gemini_voices)"
 
 # Boolean flags (no arguments)
 complete -c fabric -s S -l setup -d "Run setup for all reconfigurable parts of fabric"
@@ -84,11 +97,15 @@ complete -c fabric -l metadata -d "Output video metadata"
 complete -c fabric -l readability -d "Convert HTML input into a clean, readable view"
 complete -c fabric -l input-has-vars -d "Apply variables to user input"
 complete -c fabric -l dry-run -d "Show what would be sent to the model without actually sending it"
+complete -c fabric -l search -d "Enable web search tool for supported models (Anthropic, OpenAI)"
 complete -c fabric -l serve -d "Serve the Fabric Rest API"
 complete -c fabric -l serveOllama -d "Serve the Fabric Rest API with ollama endpoints"
 complete -c fabric -l version -d "Print current version"
 complete -c fabric -l listextensions -d "List all registered extensions"
 complete -c fabric -l liststrategies -d "List all strategies"
 complete -c fabric -l listvendors -d "List all vendors"
+complete -c fabric -l list-gemini-voices -d "List all available Gemini TTS voices"
 complete -c fabric -l shell-complete-list -d "Output raw list without headers/formatting (for shell completion)"
+complete -c fabric -l suppress-think -d "Suppress text enclosed in thinking tags"
+complete -c fabric -l disable-responses-api -d "Disable OpenAI Responses API (default: false)"
 complete -c fabric -s h -l help -d "Show this help message"
